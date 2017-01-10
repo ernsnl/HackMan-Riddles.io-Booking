@@ -89,6 +89,10 @@ public class BotState {
     public Field getField() {
         return this.field;
     }
+    
+    public void setField(Field field){
+    	this.field = field;
+    }
 
     public String getMyName() {
         return this.myName;

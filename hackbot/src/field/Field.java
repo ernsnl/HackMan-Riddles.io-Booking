@@ -82,6 +82,8 @@ public class Field {
         this.snippetPositions.clear();
         this.weaponPositions.clear();
     }
+    
+    
 
     /**
      * Parses input string from the engine and stores it in
@@ -154,6 +156,21 @@ public class Field {
         if (isPointValid(right)) validMoveTypes.add(MoveType.RIGHT);
 
         return validMoveTypes;
+    }
+    
+    
+    // TO DO: Get Valid Moves fonksiyonu deðiþtirilen matrixe göre adapte olmasý lazým
+    // Hani buglarý duvar yaptýðýmýzdaki durum mesela
+    
+    
+    public Field UpdateField(MoveType move){
+    	// TO DO: Move type a göre Field güncellenecek. 
+    	// Güncellenecek property ler 
+    	// My position
+    	// Eðer kompleks bir yapý istiyorsan buglarý da güncelleyebilirsin
+    	// Ama bunun için opponent poisitons listesini güncellemen gerekir.
+    	
+    	return this;
     }
 
     /**
