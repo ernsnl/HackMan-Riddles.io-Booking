@@ -37,10 +37,10 @@ public class Field {
     private String myId;
     private String opponentId;
     private int width;
-    private int height;
+	private int height;
 
     private String[][] field;
-    private Point myPosition;
+	private Point myPosition;
     private Point opponentPosition;
     private ArrayList<Point> enemyPositions;
     private ArrayList<Point> snippetPositions;
@@ -50,6 +50,40 @@ public class Field {
         this.enemyPositions = new ArrayList<>();
         this.snippetPositions = new ArrayList<>();
         this.weaponPositions = new ArrayList<>();
+    }
+    
+    //copy constructor for deep copy
+    public Field(Field copy) throws Exception{
+    	try{
+    		this.myId = copy.getMyId();
+    		this.opponentId = copy.getOpponentId();
+    		this.width = copy.getWidth();
+    		this.height = copy.getHeight();
+    		
+    		this.field = new String[this.width][this.height];
+    		for(int i=0;i<width;i++){
+    			for(int j=0;j<height;j++){
+    				field[i][j] = new String(copy.getField()[i][j]);
+    			}
+    		}
+    		myPosition = new Point(copy.getMyPosition());
+    		opponentPosition = new Point(copy.getOpponentPosition());
+    		
+    		this.enemyPositions = new ArrayList<>();
+            this.snippetPositions = new ArrayList<>();
+            this.weaponPositions = new ArrayList<>();
+            
+    		for(Point pp:copy.getEnemyPositions())
+    			this.enemyPositions.add(new Point(pp));
+    		
+    		for(Point pp:copy.getSnippetPositions())
+    			this.snippetPositions.add(new Point(pp));
+    		
+    		for(Point pp:copy.getWeaponPositions())
+    			this.weaponPositions.add(new Point(pp));
+    	} catch(Exception e){
+    		throw new Exception("Error: copy is attempted for an uninitialised object.");
+    	}
     }
 
     /**
@@ -189,14 +223,34 @@ public class Field {
     public void setMyId(int id) {
         this.myId = id + "";
     }
+    
+    public String getMyId(){
+    	return this.myId;
+    }
 
     public void setOpponentId(int id) {
         this.opponentId = id + "";
+    }
+    
+    public String getOpponentId(){
+    	return this.opponentId;
     }
 
     public void setWidth(int width) {
         this.width = width;
     }
+    
+    public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+	
+    public String[][] getField() {
+		return field;
+	}
 
     public void setHeight(int height) {
         this.height = height;
