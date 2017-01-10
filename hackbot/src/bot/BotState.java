@@ -44,8 +44,9 @@ public class BotState {
     private HashMap<String, Player> players;
 
     private Field field;
+    private Field fieldManip;
 
-    BotState() {
+	BotState() {
         this.field = new Field();
         this.players = new HashMap<>();
     }
@@ -109,4 +110,16 @@ public class BotState {
     public int getMaxRound() {
         return this.MAX_ROUNDS;
     }
+    
+    public void initFieldManip() throws Exception{
+    	this.fieldManip = new Field(this.field);
+    }
+    
+    public Field getFieldManip() {
+		return fieldManip;
+	}
+
+	public void setFieldManip(Field fieldManip) {
+		this.fieldManip = fieldManip;
+	}
 }

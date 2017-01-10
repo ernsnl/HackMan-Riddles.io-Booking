@@ -47,7 +47,7 @@ class BotParser {
 		this.currentState = new BotState();
 	}
 
-	void run() {
+	void run() throws Exception {
 		while(scan.hasNextLine()) {
 			String line = scan.nextLine();
 
@@ -68,6 +68,9 @@ class BotParser {
 				case "action":
 					if (parts[1].equals("move")) { /* move requested */
 						this.currentState.setTimebank(Integer.parseInt(parts[2]));
+						
+						//copy of the map is initialised here before the turn
+						this.currentState.initFieldManip();
 						Move move = this.bot.doMove(this.currentState);
 
 						if (move != null) {

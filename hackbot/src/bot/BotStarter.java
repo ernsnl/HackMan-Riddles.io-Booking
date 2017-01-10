@@ -56,7 +56,7 @@ public class BotStarter {
 		return new Move(randomMoveType); // Return random but valid move
 	}
 
- 	public static void main(String[] args) {
+ 	public static void main(String[] args) throws Exception {
  		BotParser parser = new BotParser(new BotStarter());
  		parser.run();
  	}
