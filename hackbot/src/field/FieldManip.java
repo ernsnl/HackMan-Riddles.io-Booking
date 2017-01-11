@@ -16,7 +16,8 @@ public class FieldManip extends Field{
 	public boolean isPointValid(Point p){
 		int x = p.x;
         int y = p.y;
-
+        
+        //checks for walls + bugs + opponent with a weapon
         return x >= 0 && x < this.getWidth() && y >= 0 && y < this.getHeight() &&
                 !(this.getField()[x][y].contains("x") || this.getField()[x][y].contains("E") || 
                 (this.getField()[x][y].contains(this.getOpponentId()) && this.isOpponentHasWeapon()));
