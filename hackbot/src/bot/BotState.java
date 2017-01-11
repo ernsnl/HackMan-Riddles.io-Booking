@@ -118,7 +118,7 @@ public class BotState {
     	//this attr is related with the state but to check isPointValid(), that attr is needed in FieldManip
     }
     
-    public Field getFieldManip() {
+    public FieldManip getFieldManip() {
 		return fieldManip;
 	}
 

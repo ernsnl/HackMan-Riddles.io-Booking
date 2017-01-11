@@ -24,7 +24,7 @@ public class FieldManip extends Field{
 	}
     
 	// TODO: Çok basit anlamlý yapýldý. Kompleks yapý için gözden geçirilecek!
-    public Field UpdateField(MoveType move){
+    public FieldManip UpdateField(MoveType move){
     	// TODO: Move type a göre Field güncellenecek. 
     	// Güncellenecek property ler 
     	// My position
@@ -68,4 +68,16 @@ public class FieldManip extends Field{
     	return this;
     }
     
+    
+    public void removeWeapon(int index){
+    	if(this.getWeaponPositions().size() > 0){
+    		this.getWeaponPositions().remove(index);
+    	}
+    }
+    
+    public void removeSnippet(int index){
+    	if(this.getSnippetPositions().size() > 0){
+    		this.getSnippetPositions().remove(index);
+    	}
+    }
 }

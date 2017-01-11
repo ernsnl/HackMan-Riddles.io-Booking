@@ -2,21 +2,26 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import bot.BotState;
-import field.Field;
+import field.*;
 import move.MoveType;
 
 public class Problem {
 
-	private BotState initial;
+	public BotState initial;
 	private Point goal;
 	
 	Problem(BotState initial){
 		this.initial = initial;
-		
+	}
+	
+	public Boolean setGoal(Node state){
+		this.goal = calculateClosest(state);
+		return goal != null;
 	}
 	
 	private Point calculateClosest(Node state){
-		Field currentField = state.getCurrentState().getField();
+		FieldManip currentField = state.getCurrentState().getFieldManip();
+		int i = 0, j = 0;
 		Point goalPoint = new Point();
 		ArrayList<Point> weaponPositions = currentField.getWeaponPositions();
 		if(weaponPositions.size() > 0){
@@ -27,16 +32,20 @@ public class Problem {
 				if(currentMan > tempMan ){
 					goalPoint = x;
 					currentMan = tempMan;
+					j = i;
 				}
+				i++;
 			}
 			int enemyMan = calculateManDistance(currentField.getOpponentPosition(), goalPoint);
 			if(enemyMan <= currentMan){
-				// TO DO : Remove the current selected weapon from the list of weapons
-				// TO DO : Make a recursive call
+				currentField.removeWeapon(j);
+				state.getCurrentState().setFieldManip(currentField);
+				goalPoint = calculateClosest(state);
 			}
 			return goalPoint;
 		}
-		ArrayList<Point> snippetPositions = state.getCurrentState().getField().getSnippetPositions();
+		ArrayList<Point> snippetPositions = currentField.getSnippetPositions();
+		i = 0; j = 0;
 		if(snippetPositions.size() > 0){
 			goalPoint = snippetPositions.get(0);
 			int currentMan =  calculateManDistance(currentField.getMyPosition(), goalPoint);
@@ -45,41 +54,42 @@ public class Problem {
 				if(currentMan > tempMan ){
 					goalPoint = x;
 					currentMan = tempMan;
+					j = i;
 				}
+				i++;
 			}
 			int enemyMan = calculateManDistance(currentField.getOpponentPosition(), goalPoint);
 			if(enemyMan <= currentMan){
-				// TO DO : Remove the current selected snippet from the list of snippets
-				// TO DO : Make a recursive call
+				currentField.removeSnippet(j);
+				state.getCurrentState().setFieldManip(currentField);
+				goalPoint = calculateClosest(state);
 			}	
 			return goalPoint;
 		}
 		return null;
 	}
 	
-	private ArrayList<MoveType> getActions(Node state){
-		// To DO : change accordingly to the update
-		Field currentField = state.getCurrentState().getField();
+	public ArrayList<MoveType> getActions(Node state){
+		Field currentField = state.getCurrentState().getFieldManip();
 		return currentField.getValidMoveTypes();
 	}
 	
-	private Node getResult(Node state, MoveType move){
-		Field currentField = state.getCurrentState().getField();
-		currentField = currentField.UpdateField(move);
-		state.getCurrentState().setField(currentField);
-		return state;
+	public BotState getResult(Node state, MoveType move){
+		Node result = new Node(state.getCurrentState());
+		result.getCurrentState().setFieldManip(result.getCurrentState().getFieldManip().UpdateField(move));
+		return result.getCurrentState();
 	}
 	
-	private Boolean isGoal(Node state){
+	public Boolean isGoal(Node state){
 		Point myPos = state.getCurrentState().getField().getMyPosition();
 		return myPos.x == this.goal.x && this.goal.y == myPos.y;
 	}
 	
-	private int getPathCost(int c){
+	public int getPathCost(int c){
 		return c+1;
 	}
 	
-	private int calculateManDistance(Point playerPos, Point goal){
+	public int calculateManDistance(Point playerPos, Point goal){
 		 return Math.abs( playerPos.x - goal.x)  + Math.abs(playerPos.y - goal.y);
 	}
 }
