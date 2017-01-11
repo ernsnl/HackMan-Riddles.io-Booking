@@ -38,10 +38,12 @@ public class Field {
     private String opponentId;
     private int width;
 	private int height;
+	private boolean opponentHasWeapon=false;
 
     private String[][] field;
 	private Point myPosition;
-    private Point opponentPosition;
+
+	private Point opponentPosition;
     private ArrayList<Point> enemyPositions;
     private ArrayList<Point> snippetPositions;
     private ArrayList<Point> weaponPositions;
@@ -59,6 +61,7 @@ public class Field {
     		this.opponentId = copy.getOpponentId();
     		this.width = copy.getWidth();
     		this.height = copy.getHeight();
+    		this.opponentHasWeapon = copy.isOpponentHasWeapon();
     		
     		this.field = new String[this.width][this.height];
     		for(int i=0;i<width;i++){
@@ -192,21 +195,24 @@ public class Field {
         return validMoveTypes;
     }
     
-    
-    // TO DO: Get Valid Moves fonksiyonu deðiþtirilen matrixe göre adapte olmasý lazým
-    // Hani buglarý duvar yaptýðýmýzdaki durum mesela
-    
-    
-    public Field UpdateField(MoveType move){
-    	// TO DO: Move type a göre Field güncellenecek. 
-    	// Güncellenecek property ler 
-    	// My position
-    	// Eðer kompleks bir yapý istiyorsan buglarý da güncelleyebilirsin
-    	// Ama bunun için opponent poisitons listesini güncellemen gerekir.
+    // DONE__TODO: implement find closest CS method()
+    public Point findClosestSnippet(){ //by Manhattan Distance
+    	int myX = this.getMyPosition().x;
+        int myY = this.getMyPosition().y;
+        int shortestDistance=Integer.MAX_VALUE;
+        int calc;
+        Point closest=new Point();
+        
+    	for(Point pp:this.snippetPositions){
+    		calc = Math.abs(myX-pp.x) + Math.abs(myY-pp.y);
+    		if(calc < shortestDistance){
+    			shortestDistance = calc;
+    			closest.setLocation(pp);
+    		}
+    	}
     	
-    	return this;
+    	return closest;
     }
-
     /**
      * Returns whether a point on the field is valid to stand on.
      * @param p Point to test
@@ -275,4 +281,17 @@ public class Field {
     public ArrayList<Point> getWeaponPositions() {
         return this.weaponPositions;
     }
+
+	public boolean isOpponentHasWeapon() {
+		return opponentHasWeapon;
+	}
+
+	public void setOpponentHasWeapon(boolean opponentHasWeapon) {
+		this.opponentHasWeapon = opponentHasWeapon;
+	}
+	
+	public void setMyPosition(Point myPosition) {
+		this.myPosition = myPosition;
+	}
+    
 }
