@@ -22,6 +22,7 @@ package bot;
 import java.util.HashMap;
 
 import field.Field;
+import field.FieldManip;
 import player.Player;
 
 /**
@@ -44,7 +45,7 @@ public class BotState {
     private HashMap<String, Player> players;
 
     private Field field;
-    private Field fieldManip;
+    private FieldManip fieldManip;
 
 	BotState() {
         this.field = new Field();
@@ -112,14 +113,16 @@ public class BotState {
     }
     
     public void initFieldManip() throws Exception{
-    	this.fieldManip = new Field(this.field);
+    	this.fieldManip = new FieldManip(this.field);
+    	this.fieldManip.setOpponentHasWeapon(this.players.get(this.fieldManip.getOpponentId()).hasWeapon());
+    	//this attr is related with the state but to check isPointValid(), that attr is needed in FieldManip
     }
     
     public Field getFieldManip() {
 		return fieldManip;
 	}
 
-	public void setFieldManip(Field fieldManip) {
+	public void setFieldManip(FieldManip fieldManip) {
 		this.fieldManip = fieldManip;
 	}
 }
