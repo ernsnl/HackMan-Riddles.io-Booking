@@ -114,7 +114,7 @@ public class BotState {
     
     public void initFieldManip() throws Exception{
     	this.fieldManip = new FieldManip(this.field);
-    	this.fieldManip.setOpponentHasWeapon(this.players.get(this.fieldManip.getOpponentId()).hasWeapon());
+    	this.fieldManip.setOpponentHasWeapon(this.players.get("player"+this.fieldManip.getOpponentId()).hasWeapon());
     	//this attr is related with the state but to check isPointValid(), that attr is needed in FieldManip
     }
     
