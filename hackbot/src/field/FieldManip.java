@@ -10,8 +10,6 @@ public class FieldManip extends Field{
 		super(copy);
 	}
     
-    // DONE__TODO: Get Valid Moves fonksiyonu deðiþtirilen matrixe göre adapte olmasý lazým
-    // Hani buglarý duvar yaptýðýmýzdaki durum mesela
 	@Override
 	public boolean isPointValid(Point p){
 		int x = p.x;
@@ -23,13 +21,7 @@ public class FieldManip extends Field{
                 (this.getField()[x][y].contains(this.getOpponentId()) && this.isOpponentHasWeapon()));
 	}
     
-	// TODO: Çok basit anlamlý yapýldý. Kompleks yapý için gözden geçirilecek!
     public FieldManip UpdateField(MoveType move){
-    	// TODO: Move type a göre Field güncellenecek. 
-    	// Güncellenecek property ler 
-    	// My position
-    	// Eðer kompleks bir yapý istiyorsan buglarý da güncelleyebilirsin
-    	// Ama bunun için opponent poisitons listesini güncellemen gerekir.
     	
     	int myX = this.getMyPosition().x;
         int myY = this.getMyPosition().y;
