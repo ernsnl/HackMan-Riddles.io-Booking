@@ -23,6 +23,7 @@ import java.util.Random;
 
 import move.Move;
 import move.MoveType;
+import custom.*;
 
 /**
  * bot.BotStarter
@@ -47,6 +48,10 @@ public class BotStarter {
 	 * @return A Move object
 	 */
 	public Move doMove(BotState state) {
+		//Problem p = new Problem(state);
+		//Node result = AStarSearch.AStarSearch(p);
+		//MoveType move = result.getFinalAction();
+		
 		ArrayList<MoveType> validMoveTypes = state.getField().getValidMoveTypes();
 
 		if (validMoveTypes.size() <= 0) return new Move(); // No valid moves, pass

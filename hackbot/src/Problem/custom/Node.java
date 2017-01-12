@@ -1,3 +1,5 @@
+package custom;
+
 import java.util.ArrayList;
 import bot.BotState;
 import move.MoveType;
@@ -5,9 +7,9 @@ import move.MoveType;
 public class Node{
 	
 	private BotState currentState;
-	private int pathCost;
-	private Node parent;
-	private MoveType action;
+	public int pathCost;
+	public Node parent;
+	public MoveType action;
 	
 	public Node(BotState state){
 		this.currentState = state;

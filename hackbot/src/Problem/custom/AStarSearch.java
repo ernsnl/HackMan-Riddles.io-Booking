@@ -1,3 +1,5 @@
+package custom;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -6,9 +8,8 @@ import java.util.Queue;
 public class AStarSearch  {
 
 
-	public Node AStarSearch(Problem p){
+	public static Node AStarSearch(Problem p){
 		Node node = new Node(p.initial);
-		p.setGoal(node);
 		if(p.isGoal(node)){
 			return node;
 		}
@@ -26,10 +27,14 @@ public class AStarSearch  {
 					frontier.add(child);
 				}
 				else if(frontier.contains(child)){
-					Node incumbent = frontier[child]
+					Node incumbent = frontier.get(frontier.indexOf(child));
+					if(p.getHeuristic(child) < p.getHeuristic(incumbent)){
+						frontier.remove(frontier.get(frontier.indexOf(child)));
+						frontier.add(child);
+					}
 				}
 			}
 		}
-		
+		return node;
 	}
 }

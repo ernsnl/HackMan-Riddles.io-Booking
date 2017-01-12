@@ -1,3 +1,5 @@
+package custom;
+
 import java.awt.Point;
 import java.util.ArrayList;
 
@@ -10,17 +12,18 @@ public class Problem {
 	public BotState initial;
 	private Point goal;
 	
-	Problem(BotState initial){
+	public Problem(BotState initial){
 		this.initial = initial;
+		this.setGoal(initial);
 	}
 	
-	public Boolean setGoal(Node state){
+	public Boolean setGoal(BotState state){
 		this.goal = calculateClosest(state);
 		return goal != null;
 	}
 	
-	private Point calculateClosest(Node state){
-		FieldManip currentField = state.getCurrentState().getFieldManip();
+	private Point calculateClosest(BotState state){
+		FieldManip currentField = state.getFieldManip();
 		int i = 0, j = 0;
 		Point goalPoint = new Point();
 		ArrayList<Point> weaponPositions = currentField.getWeaponPositions();
@@ -39,7 +42,7 @@ public class Problem {
 			int enemyMan = calculateManDistance(currentField.getOpponentPosition(), goalPoint);
 			if(enemyMan <= currentMan){
 				currentField.removeWeapon(j);
-				state.getCurrentState().setFieldManip(currentField);
+				state.setFieldManip(currentField);
 				goalPoint = calculateClosest(state);
 			}
 			return goalPoint;
@@ -61,7 +64,7 @@ public class Problem {
 			int enemyMan = calculateManDistance(currentField.getOpponentPosition(), goalPoint);
 			if(enemyMan <= currentMan){
 				currentField.removeSnippet(j);
-				state.getCurrentState().setFieldManip(currentField);
+				state.setFieldManip(currentField);
 				goalPoint = calculateClosest(state);
 			}	
 			return goalPoint;
@@ -87,6 +90,10 @@ public class Problem {
 	
 	public int getPathCost(int c){
 		return c+1;
+	}
+	
+	public int getHeuristic(Node n){
+		return n.pathCost + this.calculateManDistance(n.getCurrentState().getField().getMyPosition(), this.goal);
 	}
 	
 	public int calculateManDistance(Point playerPos, Point goal){
